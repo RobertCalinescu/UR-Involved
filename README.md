@@ -35,7 +35,7 @@ We are following an **Agile/Scrum** development process with defined milestones:
 
 To solve the problem of fragmented and inaccessible student club information.
 
-Currently, students struggle to find centralized information about active clubs, while club executives lack a unified platform to manage members and events. **UR Clubs** aims to bridge this gap by providing a single, reliable platform that connects students with campus organizations.
+Currently, students struggle to find centralized information about active clubs, while club executives lack a unified platform to manage members and events. **UR Involved** aims to bridge this gap by providing a single, reliable platform that connects students with campus organizations.
 
 ---
 
