@@ -67,7 +67,7 @@ This project is built using the **Model-View-Controller (MVC)** architecture.
 
 - **Frontend (View):** HTML, CSS, Bootstrap, JavaScript  
 - **Backend (Controller):** Node.js  
-- **Database (Model):** PostgressSQL / MongoDB (TBD)  
+- **Database (Model):** MongoDB  
 - **Project Management:** GitHub  
 
 ---
