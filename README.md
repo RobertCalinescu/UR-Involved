@@ -7,7 +7,7 @@
 
 ## Project Description
 
-UR Clubs is a web-based software application designed to centralize student club management, event tracking, and membership communication at the University of Regina.
+UR Involved is a web-based software application designed to centralize student club management, event tracking, and membership communication at the University of Regina.
 
 Developed as a group project for **ENSE 281**, this application follows the **Model-View-Controller (MVC)** architectural pattern. The project simulates a real-world software engineering environment using **Agile/Scrum methodologies**, iterative development, and collaborative project management through **GitHub**.
 
