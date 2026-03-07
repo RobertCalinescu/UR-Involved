@@ -22,6 +22,8 @@ The board tracks sprint tasks, MVP features, and project progress using an Agile
 GitHub Project Board:
 [[Link to Project Board]](https://github.com/users/RobertCalinescu/projects/2/views/1)
 
+---
+
 ## Project Milestones
 
 We are following an **Agile/Scrum** development process with defined milestones:
@@ -78,6 +80,20 @@ This project is built using the **Model-View-Controller (MVC)** architecture.
 - **Backend (Controller):** Node.js  
 - **Database (Model):** MongoDB  
 - **Project Management:** GitHub  
+
+---
+
+## Minimum Viable Product (MVP)
+
+The initial MVP focuses on delivering the core functionality needed for students to discover and engage with university clubs.
+
+The MVP includes the following features:
+- Club discovery homepage displaying available student clubs
+- Search and browsing functionality for clubs
+- Club details page with description and event information
+- Ability for students to submit a request to join a club
+- Ability for students to submit a new club proposal
+- Basic event visibility for clubs
 
 ---
 
