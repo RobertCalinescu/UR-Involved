@@ -101,7 +101,7 @@ The MVP includes the following features:
 
 | Name | Student ID | Email | Role |
 |-----|-----------|-------|------|
-| Robert-Dominic Calinescu | 200492232 | rcr492@uregina.ca | Project Lead / Backend | Database 
+| Robert-Dominic Calinescu | 200492232 | rcr492@uregina.ca | Project Lead / Backend | Database | 
 | Peyton Bowen | 200504005 | pbb092@uregina.ca | Backend |
 | Harleen Kaur | 200530299 | hkh549@uregina.ca | Frontend / UX / UI |
 | Abraham Omoregie | 200507536 | aoo988@uregina.ca | Frontend / UX / UI |
