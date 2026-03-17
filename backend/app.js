@@ -2,10 +2,23 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 
+const session = require("express-session");
+const passport = require("passport");
+require("dotenv").config();
+
 const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 const PORT = 3000;
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
