@@ -17,20 +17,32 @@
   <body>
     <!-- Header should go in "header.ejs" for dynamic loading (maybe?) -->
     <header class="header header-main">
-      <div class="header-icon-container">
-        <img src="/images/University_of_Regina_Logo.jpg" alt="UR Icon" />   <!-- Might change to SVG pending team agreement -->
-        <h2>UR Involved</h2>
-      </div>
-      <!-- header-nav-main easily editable by providing the respective main links per page -->
-      <!-- Should be implementable thru ejs -->
-      <div class="header-nav-main">
-        <!-- TODO: Add arrow indicator -->
-        <button class="btn btn-warning">Create club</button>
-        <button class="btn btn-warning">Events</button>
-      </div>
-      <!-- ToDo: Add nav links (homepage does not have nav links) -->
-      <!-- TODO: Add profile for user dashboard -->
-    </header>
+  <div class="header-icon-container">
+    <img
+      src="/images/University_of_Regina_Logo.jpg"
+      alt="UR Icon"
+    />
+    <h2>UR Involved</h2>
+  </div>
+
+  <div class="header-nav-main">
+    <button class="btn btn-warning header-action-btn">Create club</button>
+    <button class="btn btn-warning header-action-btn">Events</button>
+
+    <div class="auth-links">
+      <% if (currentUser) { %>
+        <a href="/me" class="btn btn-success auth-btn">My Account</a>
+
+        <form action="/logout" method="POST" class="logout-form">
+          <button type="submit" class="btn btn-outline-light auth-btn">Logout</button>
+        </form>
+      <% } else { %>
+        <a href="/login" class="btn btn-success auth-btn">Login</a>
+        <a href="/register" class="btn btn-outline-light auth-btn">Register</a>
+      <% } %>
+    </div>
+  </div>
+</header>
     <div class="main">
       <div class="intro">
         <div class="intro-text">
@@ -103,45 +115,23 @@
       <!-- Same implementation as sort. Unsure what filter options available -->
     </div>
     <div class="club-group">
-      <!-- Iterate thru each club in db, should be easily implementable using a for loop -->
-      <div class="club-card">
-        <img
-          src="/images/University_of_Regina_Logo.jpg"
-          alt="Filler club logo"
-        />
-        <p>Club name here</p>
-        <!-- Here should come the social media icons -->
-        <!-- TODO: specify css for clubs social media links icons -->
-      </div>
-      <div class="club-card">
-        <img
-          src="/images/University_of_Regina_Logo.jpg"
-          alt="Filler club logo"
-        />
-        <p>Club name here</p>
-      </div>
-      <div class="club-card">
-        <img
-          src="/images/University_of_Regina_Logo.jpg"
-          alt="Filler club logo"
-        />
-        <p>Club name here</p>
-      </div>
-      <div class="club-card">
-        <img
-          src="/images/University_of_Regina_Logo.jpg"
-          alt="Filler club logo"
-        />
-        <p>Club name here</p>
-      </div>
-      <div class="club-card">
-        <img
-          src="/images/University_of_Regina_Logo.jpg"
-          alt="Filler club logo"
-        />
-        <p>Club name here</p>
-      </div>
-    </div>
+  <% if (clubs && clubs.length > 0) { %>
+    <% clubs.forEach(club => { %>
+      <a href="/clubs/<%= club._id %>" class="club-card-link">
+        <div class="club-card">
+          <img
+            src="/images/University_of_Regina_Logo.jpg"
+            alt="Club logo"
+          />
+          <p><%= club.name %></p>
+          <small><%= club.category %></small>
+        </div>
+      </a>
+    <% }) %>
+  <% } else { %>
+    <p>No clubs are available right now.</p>
+  <% } %>
+</div>
     <div class="call-to-action" id="first">
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
