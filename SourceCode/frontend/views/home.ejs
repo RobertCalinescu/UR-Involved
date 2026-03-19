@@ -1,48 +1,4 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UR Involved</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
-    />
-    <link rel="stylesheet" href="/css/style.css" />
-  </head>
-  <body>
-    <!-- Header should go in "header.ejs" for dynamic loading (maybe?) -->
-    <header class="header header-main">
-  <div class="header-icon-container">
-    <img
-      src="/images/University_of_Regina_Logo.jpg"
-      alt="UR Icon"
-    />
-    <h2>UR Involved</h2>
-  </div>
-
-  <div class="header-nav-main">
-    <button class="btn btn-warning header-action-btn">Create club</button>
-    <button class="btn btn-warning header-action-btn">Events</button>
-
-    <div class="auth-links">
-      <% if (currentUser) { %>
-        <a href="/me" class="btn btn-success auth-btn">My Account</a>
-
-        <form action="/logout" method="POST" class="logout-form">
-          <button type="submit" class="btn btn-outline-light auth-btn">Logout</button>
-        </form>
-      <% } else { %>
-        <a href="/login" class="btn btn-success auth-btn">Login</a>
-        <a href="/register" class="btn btn-outline-light auth-btn">Register</a>
-      <% } %>
-    </div>
-  </div>
-</header>
+<%- include("layouts/header.ejs") -%>
     <div class="main">
       <div class="intro">
         <div class="intro-text">
@@ -149,13 +105,4 @@
       <button class="btn btn-success">Go here!</button>
     </div>
 
-    <!-- Footer should go in "footer.ejs" for dynamic loading (maybe?) -->
-    <!-- TODO: Discuss what should go in footer and implement -->
-    <footer class="footer">
-      <p>Link</p>
-      <p>Link</p>
-      <p>Link</p>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"></script>
-  </body>
-</html>
+<%- include("layouts/footer.ejs") -%>
