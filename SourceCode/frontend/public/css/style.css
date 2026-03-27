@@ -238,3 +238,11 @@ h2 {
   font-weight: 600;
   margin-top: 0.5rem;
 }
+
+.create-club-form {
+  grid-column: 3/11;
+  max-height: 1255px;
+  background: rgba(242, 227, 227, 1);
+  border-radius: 30px;
+  padding: 3rem;
+}
