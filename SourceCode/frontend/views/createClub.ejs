@@ -1,0 +1,95 @@
+<%- include("layouts/header.ejs") -%>
+
+<nav
+  style="
+    --bs-breadcrumb-divider: url(
+      &#34;data:image/svg + xml,%3Csvgxmlns=&quot;http://www.w3.org/2000/svg&quot;width=&quot;8&quot;height=&quot;8&quot;%3E%3Cpathd=&quot;M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z&quot;fill=&quot;%236c757d&quot;/%3E%3C/svg%3E&#34;
+    );
+  "
+  aria-label="breadcrumb"
+>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Create Club</li>
+  </ol>
+</nav>
+<div class="main">
+  <div class="intro">
+    <div class="intro-text">
+      <h2>Want to create a club or group?</h2>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
+        vestibulum dui, sit amet congue nisi. Nullam non mi a libero ornare
+        pretium. Nullam fringilla et dui quis feugiat. Proin ullamcorper eros
+        est, id luctus nisl pellentesque id. Etiam lobortis vitae augue a
+        semper. Maecenas eget tempus leo.
+      </p>
+    </div>
+    <!-- TODO: Change image -->
+    <img
+      src="/images/pexels-ivan-s-5676744.jpg"
+      alt="Bunch of students happily working together"
+    />
+  </div>
+</div>
+<div class="create-club-form">
+  <h2>Club creation form</h2>
+  <form action="/create-club" method="post">
+    <label for="club-name" class="form-label">Proposed club name</label>
+    <input
+      type="text"
+      id="club-name"
+      class="form-control border-bottom mb-4 p-3"
+      placeholder="Write your club name here."
+    />
+
+    <label for="club-description" class="form-label">Description</label>
+    <textarea
+      name="club-description"
+      id="club-description"
+      class="form-control p-3 mb-4"
+      rows="20"
+      placeholder="Write the description of your club's activities here. Make sure it matches the records we already have"
+    ></textarea>
+
+    <label for="club-category" class="form-label">Category</label>
+    <input
+      name="club-category"
+      id="club-category"
+      list="category-options"
+      placeholder="Write the category(s) your club belongs to here."
+      class="form-control p-3 mb-4"
+    />
+    <datalist id="category-options">
+      <option value="Science"></option>
+      <option value="Humanities"></option>
+      <option value="Engineering"></option>
+      <option value="Sports"></option>
+      <option value="Recreational"></option>
+      <option value="Nursing"></option>
+      <option value="Business"></option>
+    </datalist>
+
+    <label for="club-logo" class="form-label">Logo</label>
+    <input
+      type="file"
+      name="club-logo"
+      id="club-logo"
+      class="form-control mb-4"
+    />
+
+    <label for="contact-email" class="form-label">Contact Email</label>
+    <input
+      type="text"
+      name="contact-email"
+      id="contact-email"
+      class="form-control mb-4 p-3"
+      placeholder="Write your club's contact email here"
+    />
+
+    <!-- TODO: Discuss with team what else to ask for creation form -->
+    <input type="submit" value="Submit" class="btn btn-success" />
+  </form>
+</div>
+
+<%- include("layouts/footer.ejs") -%>
