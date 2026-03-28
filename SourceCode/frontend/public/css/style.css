@@ -60,13 +60,14 @@ h2 {
   gap: 50px;
 }
 
-.header-nav-main button {
+.header-nav-main a {
   background: rgba(224, 210, 14, 1);
   border-radius: 0;
   height: 56px;
   width: 100%;
   max-width: 363px;
   margin: auto;
+  padding: 1rem;
 }
 
 .intro {
@@ -245,4 +246,115 @@ h2 {
   background: rgba(242, 227, 227, 1);
   border-radius: 30px;
   padding: 3rem;
+}
+
+.dashboard-btn-container {
+  grid-column: 12/13;
+  margin-bottom: 0;
+  margin-top: auto;
+  text-align: center;
+}
+
+.breadcrumb-container {
+  grid-column: 3/11;
+  padding: 3px;
+}
+
+.profile-card {
+  grid-column: 3/11;
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  border: 1px solid rgba(0, 0, 0, 0.65);
+  border-radius: 30px;
+  gap: 25px;
+  height: 320px;
+}
+
+.profile-image {
+  border-radius: 30px;
+  width: 266px;
+  height: 266px;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-info h3 {
+  font-size: 22px;
+  margin: 0;
+  color: #000;
+}
+
+.profile-info p {
+  margin: 0;
+  color: #333;
+  line-height: 1.4;
+  font-size: 18px;
+}
+
+.settings-icon {
+  font-size: 24px;
+  color: #00c800;
+}
+.header-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-row h2 {
+  color: #00c800; /* The vibrant green color */
+  font-size: 24px;
+  margin: 0;
+  font-weight: 500;
+}
+
+.club-container {
+  grid-column: 3/11;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 24px;
+}
+
+.dashboard-club-card {
+  flex: 0 0 calc((100% / 4) - 24px);
+  width: 234px;
+  height: 229px;
+  background: rgba(217, 217, 217, 1);
+  border-radius: 30px;
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.dashboard-club-card img {
+  border-radius: 30px;
+  width: 102.05px;
+  height: 99px;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.dashboard-club-card small {
+  display: block;
+  color: #00643c;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.dashboard-event-card {
+  width: 233px;
+  height: 400px;
 }
