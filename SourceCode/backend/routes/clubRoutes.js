@@ -14,6 +14,7 @@ router.get("/clubs/:id", clubController.showClubDetails);
 router.get("/dashboard", ensureAuthenticated, clubController.showDashboard);
 
 // student actions
+router.get("/create-club", ensureAuthenticated, ensureStudent, clubController.showClubCreation);
 router.post("/clubs/:id/join-request", ensureAuthenticated, ensureStudent, clubController.submitJoinRequest);
 router.post("/clubs/create-request", ensureAuthenticated, ensureStudent, clubController.submitClubCreationRequest);
 
@@ -26,5 +27,6 @@ router.post("/admin/club-requests/:id/reject", ensureAuthenticated, ensureSystem
 router.get("/admin/clubs/:clubId/join-requests", ensureAuthenticated, clubController.showClubJoinRequests);
 router.post("/admin/join-requests/:id/approve", ensureAuthenticated, clubController.approveJoinRequest);
 router.post("/admin/join-requests/:id/reject", ensureAuthenticated, clubController.rejectJoinRequest);
+
 
 module.exports = router;

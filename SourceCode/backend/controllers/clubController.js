@@ -76,6 +76,11 @@ exports.showDashboard = async (req, res) => {
   }
 };
 
+exports.showClubCreation = async (req, res) => {
+  console.log("Attempting to load club creation page:");
+  res.render("createClub");
+}
+
 exports.submitJoinRequest = async (req, res) => {
   try {
     const club = await Club.findOne({
