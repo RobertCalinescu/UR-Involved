@@ -82,7 +82,3 @@ exports.showCurrentUser = (req, res) => {
     </form>
   `);
 };
-
-exports.showDashboardPage = (req, res) => {
-  res.render("dashboard");
-};
