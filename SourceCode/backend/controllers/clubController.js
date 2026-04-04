@@ -77,7 +77,6 @@ exports.showDashboard = async (req, res) => {
 };
 
 exports.showClubCreation = async (req, res) => {
-  console.log("Attempting to load club creation page:");
   res.render("createClub");
 }
 

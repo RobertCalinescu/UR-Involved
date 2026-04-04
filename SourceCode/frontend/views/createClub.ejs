@@ -5,7 +5,7 @@
   aria-label="breadcrumb"
 >
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="/home">Home</a></li>
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
     <li class="breadcrumb-item active" aria-current="page">Create Club</li>
   </ol>
 </nav>
@@ -30,7 +30,7 @@
 </div>
 <div class="create-club-form">
   <h2>Club creation form</h2>
-  <form action="/create-club" method="post">
+  <form action="/clubs/create-request" method="post">
     <label for="club-name" class="form-label">Proposed club name</label>
     <input
       type="text"
@@ -84,7 +84,7 @@
     />
 
     <!-- TODO: Discuss with team what else to ask for creation form -->
-    <input type="submit" value="Submit" class="btn btn-success" />
+    <button type="submit" class="btn btn-success" >Submit</button>
   </form>
 </div>
 
