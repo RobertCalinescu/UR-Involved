@@ -10,6 +10,7 @@ const {
 
 router.get("/", clubController.showHomePage);
 router.get("/clubs/:id", clubController.showClubDetails);
+router.get("/partials/clubs", clubController.renderClubPartial);
 
 router.get("/dashboard", ensureAuthenticated, clubController.showDashboard);
 
