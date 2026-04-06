@@ -26,7 +26,7 @@ router.get("/dashboard", ensureAuthenticated, clubController.showDashboard);
 
 // ================= STUDENT ACTIONS =================
 router.post(
-  "/clubs/:id/join-request",
+  "/clubs/:id/join",
   ensureAuthenticated,
   ensureStudent,
   clubController.submitJoinRequest

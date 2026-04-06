@@ -3,7 +3,7 @@
 <div class="club-detail-page">
 
   <!-- SUCCESS MESSAGE -->
-  <% if (joined === "true") { %>
+<% if (joined && joined.toString() === "true") { %>
     <div style="
       background: #e6f9f0;
       color: #0c6b58;
@@ -14,6 +14,20 @@
       text-align: center;
     ">
       Request sent successfully!
+    </div>
+  <% } %>
+
+  <!-- ALREADY REQUESTED MESSAGE -->
+  <% if (existingJoinRequest) { %>
+    <div style="
+      background: #fff3cd;
+      color: #856404;
+      padding: 12px;
+      margin: 20px;
+      border-radius: 10px;
+      text-align: center;
+    ">
+      You already have a pending join request.
     </div>
   <% } %>
 
@@ -45,10 +59,16 @@
         <!-- BUTTONS -->
         <div class="club-actions">
 
-          <% if (joined === "true") { %>
+          <% if (existingJoinRequest) { %>
+            <button class="join-btn" disabled style="background: grey;">
+              Request Pending
+            </button>
+
+          <% } else if (joined === "true") { %>
             <button class="join-btn" disabled style="background: grey;">
               Request Sent
             </button>
+
           <% } else { %>
             <a href="/clubs/<%= club._id %>/join" class="join-btn">
               Request to Join

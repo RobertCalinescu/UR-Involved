@@ -63,7 +63,13 @@ exports.showDashboard = (req, res) => {
     return res.redirect("/login");
   }
 
-  res.render("dashboard", { user: req.user });
+  res.render("dashboard", {
+  user: req.user,
+  userJoinRequests: [],
+  userClubCreationRequests: [],
+  memberClubs: [],
+  adminClubs: []
+});
 };
 
 
