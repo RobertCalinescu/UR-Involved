@@ -357,7 +357,7 @@ h2 {
   height: 400px;
 }
 
-<<<<<<< HEAD
+
 .nav-container {
   grid-column: 6/10;
   margin-top: auto;
@@ -374,7 +374,8 @@ h2 {
 .nav-pills .show > .nav-link {
     background-color: #e0d20e !important;
     color: #000000 !important;
-=======
+}
+
 .club-content {
   display: flex;
   align-items: flex-start;
@@ -748,5 +749,4 @@ a.join-btn:active {
   color: #666;
   margin-top: 8px;
   text-align: center;
->>>>>>> dccbae3 (final fixes club detail and join request page)
 }
