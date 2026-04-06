@@ -30,10 +30,11 @@
 </div>
 <div class="create-club-form">
   <h2>Club creation form</h2>
-  <form action="/create-request" method="post">
+  <form action="/clubs/create-request" method="post">
     <label for="club-name" class="form-label">Proposed club name</label>
     <input
       type="text"
+      name="proposedName"
       id="club-name"
       class="form-control border-bottom mb-4 p-3"
       placeholder="Write your club name here."
@@ -41,7 +42,7 @@
 
     <label for="club-description" class="form-label">Description</label>
     <textarea
-      name="club-description"
+      name="description"
       id="club-description"
       class="form-control p-3 mb-4"
       rows="20"
@@ -50,7 +51,7 @@
 
     <label for="club-category" class="form-label">Category</label>
     <input
-      name="club-category"
+      name="category"
       id="club-category"
       list="category-options"
       placeholder="Write the category(s) your club belongs to here."
@@ -66,18 +67,19 @@
       <option value="Business"></option>
     </datalist>
 
-    <label for="club-logo" class="form-label">Logo</label>
+    <label for="logo" class="form-label">Logo</label>
     <input
       type="file"
-      name="club-logo"
-      id="club-logo"
+      name="logo"
+      id="logo"
       class="form-control mb-4"
+      accept=".png,.jpg,.jpeg,.gif,.webp"
     />
 
     <label for="contact-email" class="form-label">Contact Email</label>
     <input
       type="text"
-      name="contact-email"
+      name="contactEmail"
       id="contact-email"
       class="form-control mb-4 p-3"
       placeholder="Write your club's contact email here"
@@ -89,3 +91,4 @@
 </div>
 
 <%- include("layouts/footer.ejs") -%>
+

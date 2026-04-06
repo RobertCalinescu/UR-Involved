@@ -34,7 +34,6 @@ app.use((req, res, next) => {
 
 // Set EJS as the view engine
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "../frontend/views"));
 
 app.use("/", authRoutes);
 app.use("/", clubRoutes);

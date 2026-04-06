@@ -86,7 +86,11 @@
         <ul class="dropdown-menu dropdown-menu-end">
           <li><a href="/dashboard" class="dropdown-item">Dashboard</a></li>
           <li><hr class="dropdown-divider"></li>
-          <li><a href="/logout" class="dropdown-item">Logout</a></li>
+          <li>
+            <form action="/logout" method="POST" class="m-0">
+              <button type="submit" class="dropdown-item">Logout</button>
+            </form>
+          </li>
         </ul>
 
       </div>
