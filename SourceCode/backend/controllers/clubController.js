@@ -25,7 +25,7 @@ exports.showClubDetails = async (req, res) => {
       return res.status(404).send("Club not found");
     }
 
-    // ✅ TEMP events (since you don’t have events model yet)
+    
     const upcoming = [];
     const past = [];
 
@@ -33,8 +33,8 @@ exports.showClubDetails = async (req, res) => {
       club,
       upcoming,
       past,
-      joined: req.query.joined || null,   // for success message
-      currentPage: "overview"             // ✅ FIXES YOUR ERROR
+      joined: req.query.joined || null, 
+      currentPage: "overview"            
     });
 
   } catch (error) {
