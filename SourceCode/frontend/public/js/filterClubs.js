@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (form && clubContainer) {
     
-    // FIX: Listen to the whole document since inputs are physically outside the form tag
+    // Listen to the whole document since inputs are physically outside the form tag
     document.addEventListener("input", (e) => {
       // Check if the specific input they clicked/typed in belongs to our form
       if (e.target.form === form) {

@@ -4,15 +4,15 @@ const ClubCreationRequest = require("../../database/models/ClubCreationRequest")
 
 exports.showHomePage = async (req, res) => {
   try {
-    // 1. Grab the inputs from the URL (defaulting to empty/all if it's their first visit)
+    // Grab the inputs from the URL (defaulting to empty/all if it's their first visit)
     const search = req.query.search || "";
     const sort = req.query.sort || "alphabetical";
     const filter = req.query.filter || "All";
 
-    // 2. Build the base database query (only show approved clubs)
+    // Build the base database query (only show approved clubs)
     let query = { approved: true };
 
-    // 3. If they typed a search term, find partial matches in the club name (case-insensitive)
+    // If they typed a search term, find partial matches in the club name (case-insensitive)
     if (search) {
       query.$or = [
         { name: { $regex: search, $options: "i" } },
@@ -20,12 +20,12 @@ exports.showHomePage = async (req, res) => {
       ];
     }
 
-    // 4. If they selected a specific category, add it to the query
+    // If they selected a specific category, add it to the query
     if (filter !== "All") {
       query.category = filter;
     }
 
-    // 5. Figure out how to sort the database results
+    // Figure out how to sort the database results
     let sortOptions = {};
     if (sort === "alphabetical") {
       sortOptions = { name: 1 }; // 1 is ascending (A-Z)
@@ -37,10 +37,10 @@ exports.showHomePage = async (req, res) => {
       sortOptions = { createdAt: 1 }; // Oldest first
     }
 
-    // 6. Fetch the clubs using the dynamically built query and sort options
+    // Fetch the clubs using the dynamically built query and sort options
     const clubs = await Club.find(query).sort(sortOptions);
 
-    // 7. Render the page, passing the clubs AND the current selections so EJS can check the right boxes
+    // Render the page, passing the clubs AND the current selections so EJS can check the right boxes
     res.render("home", { 
       clubs,
       currentSearch: search,
@@ -62,7 +62,7 @@ exports.renderClubPartial = async (req, res) => {
 
     let query = { approved: true };
 
-    // 1. Check for search terms across name, category, and description
+    // Check for search terms across name, category, and description
     if (search) {
       query.$or = [
         { name: { $regex: search, $options: "i" } },
@@ -70,22 +70,21 @@ exports.renderClubPartial = async (req, res) => {
       ];
     }
 
-    // 2. Apply category filter if it's not "All"
+    // Apply category filter if it's not "All"
     if (filter !== "All") {
       query.category = filter;
     }
 
-    // 3. Apply the correct sorting logic
+    // Apply the correct sorting logic
     let sortOptions = {};
     if (sort === "alphabetical") sortOptions = { name: 1 };
     else if (sort === "reverseAlphabetical") sortOptions = { name: -1 };
     else if (sort === "newest") sortOptions = { createdAt: -1 };
     else if (sort === "oldest") sortOptions = { createdAt: 1 };
 
-    // 4. Fetch the data from MongoDB
+    // Fetch the data from MongoDB
     const clubs = await Club.find(query).sort(sortOptions);
     
-    // 5. THE MAGIC: Render JUST the partial file with the new data, and send that HTML text back
     res.render("partials/clubList", { clubs: clubs }); 
 
   } catch (error) {
