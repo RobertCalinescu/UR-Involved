@@ -5,15 +5,15 @@ const mongoose = require("mongoose");
 
 exports.showHomePage = async (req, res) => {
   try {
-    const { clubs, search, sort, filter } = await getClubsData(req.query);
-
+    const clubs = await Club.find({ approved: true }).sort({ name: 1 });
+    let tempUsername = "";
+    if (await req.user) {
+      tempUsername = req.user.email;
+    }
+    const username = tempUsername;
     res.render("home", { 
       clubs,
-      currentSearch: search,
-      currentSort: sort,
-      currentFilter: filter
-    });
-
+      username});
   } catch (error) {
     console.error("failure rendering home page", error);
     res.status(500).send("Error loading homepage.");
@@ -140,6 +140,14 @@ exports.showDashboard = async (req, res) => {
     res.status(500).send("Error loading dashboard.");
   }
 };
+
+exports.showEditProfile = async (req, res) => {
+  res.render("editProfile", {user: req.user});
+}
+
+exports.showClubCreation = async (req, res) => {
+  res.render("createClub", {user: req.user});
+}
 
 exports.submitJoinRequest = async (req, res) => {
   try {
@@ -430,3 +438,4 @@ exports.rejectJoinRequest = async (req, res) => {
     res.status(500).send("Error rejecting join request.");
   }
 };
+

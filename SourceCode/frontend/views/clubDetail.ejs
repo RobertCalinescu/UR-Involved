@@ -116,25 +116,9 @@
           <% } %>
         </div>
 
-        <!-- PAST EVENTS -->
-        <h2 class="section-title">Past events</h2>
-
-        <div class="event-grid">
-          <% if (past && past.length > 0) { %>
-            <% past.forEach(event => { %>
-              <div class="event-card">
-                <div class="event-image"></div>
-                <div class="event-info">
-                  <h4><%= event.title %></h4>
-                  <p><%= event.location || "No location" %></p>
-                  <p><%= new Date(event.date).toLocaleDateString() %></p>
-                  <p><%= event.price ? "$" + event.price : "Free" %></p>
-                </div>
-              </div>
-            <% }) %>
-          <% } else { %>
-            <p class="no-events">No past events</p>
-          <% } %>
+        <div class="actions">
+          <a href="#" class="btn btn-primary">Join Club</a>
+          <a href="/" class="btn btn-secondary">Back to Home</a>
         </div>
 
       </div>
