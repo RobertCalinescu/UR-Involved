@@ -1,4 +1,4 @@
-<%- include("layouts/secondary-header.ejs", { clubDetails: false, currentPage: "create-club" }) -%>
+<%- include("layouts/secondary-header.ejs", { currentPage: "createClub", currentUser: user.email}) -%>
 
 <nav class="breadcrumb-container" aria-label="breadcrumb">
   <ol class="breadcrumb">
@@ -11,12 +11,13 @@
     <div class="intro-text">
       <h2>Want to create a club or group?</h2>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed
-        vestibulum dui, sit amet congue nisi. Nullam non mi a libero ornare
-        pretium. Nullam fringilla et dui quis feugiat. Proin ullamcorper eros
-        est, id luctus nisl pellentesque id. Etiam lobortis vitae augue a
-        semper. Maecenas eget tempus leo.
-      </p>
+        UR Involved makes creating a club or social group a breeze! Its 
+        as easy as filling out the below form and waiting for it to be 
+        approved. If you'd like to see the status of a club creation
+        request, it will be on your dashboard, located in the menu near
+        the top right of every page.
+      </p >
+      <a href="/dashboard">Alternatively, go straight to your dashboard</a>
     </div>
     <!-- TODO: Change image -->
     <img
@@ -83,7 +84,7 @@
     />
 
     <!-- TODO: Discuss with team what else to ask for creation form -->
-    <input type="submit" value="Submit" class="btn btn-success" />
+    <button type="submit" class="btn btn-success" >Submit</button>
   </form>
 </div>
 

@@ -10,6 +10,8 @@ const {
 } = require("../middleware/authMiddleware");
 
 router.get("/", clubController.showHomePage);
+router.get("/partials/clubs", clubController.renderClubPartial);
+
 router.get("/clubs/:id", clubController.showClubDetails);
 router.get("/create-club", ensureAuthenticated, ensureStudent, clubController.showCreateClubPage);
 
@@ -22,6 +24,8 @@ router.get("/dashboard", ensureAuthenticated, clubController.showDashboard);
 
 
 // student actions
+router.get("/edit-profile", ensureAuthenticated, ensureStudent, clubController.showEditProfile);
+router.get("/create-club", ensureAuthenticated, ensureStudent, clubController.showClubCreation);
 router.post("/clubs/:id/join", ensureAuthenticated, ensureStudent, clubController.submitJoinRequest);
 router.post("/clubs/create-request", ensureAuthenticated, ensureStudent, upload.single("logo"), clubController.submitClubCreationRequest);
 
@@ -34,5 +38,6 @@ router.post("/admin/club-requests/:id/reject", ensureAuthenticated, ensureSystem
 router.get("/admin/clubs/:clubId/join-requests", ensureAuthenticated, clubController.showClubJoinRequests);
 router.post("/admin/join-requests/:id/approve", ensureAuthenticated, clubController.approveJoinRequest);
 router.post("/admin/join-requests/:id/reject", ensureAuthenticated, clubController.rejectJoinRequest);
+
 
 module.exports = router;
