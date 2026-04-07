@@ -73,6 +73,10 @@ exports.logoutUser = (req, res, next) => {
 };
 
 exports.showCurrentUser = (req, res) => {
+  if (!req.user) {
+    return res.status(401).send("Not logged in.");
+  }
+
   res.send(`
     <h1>Logged In User</h1>
     <p><strong>Email:</strong> ${req.user.email}</p>
