@@ -26,7 +26,6 @@
       <!-- LEFT SIDE -->
       <div class="club-card">
 
-        <!-- LOGO -->
         <% if (club.logo) { %>
           <img src="<%= club.logo %>" class="club-logo-img" />
         <% } else { %>
@@ -46,7 +45,6 @@
             : "N/A" %>
         </p>
 
-        <!-- ACTIONS -->
         <div class="club-actions">
 
           <% if (existingJoinRequest) { %>
@@ -124,26 +122,31 @@
         </div>
 
         <!-- ABOUT -->
-<div id="about" class="tab-content">
+        <div id="about" class="tab-content">
 
-  <!-- ABOUT BOX -->
-  <div class="empty-box">
-    <h4>About</h4>
-    <p><%= club.description || "No description available." %></p>
-  </div>
+          <div class="empty-box">
+            <h4>About</h4>
+            <p><%= club.description || "No description available." %></p>
+          </div>
 
-  <!-- CATEGORY BOX -->
-  <div class="empty-box" style="margin-top: 20px;">
-    <h4>Category</h4>
-    <p><%= club.category || "Not specified" %></p>
-  </div>
+          <div class="empty-box" style="margin-top: 20px;">
+            <h4>Category</h4>
+            <p><%= club.category || "Not specified" %></p>
+          </div>
 
-</div>
+        </div>
+
+        <!-- MEMBERS -->
+        <div id="members" class="tab-content">
+          <div class="empty-box">
+            <p>Nothing to see (yet!)</p>
+          </div>
+        </div>
 
         <!-- GALLERY -->
         <div id="gallery" class="tab-content">
           <div class="empty-box">
-            Nothing to see (yet!)
+            <p>Nothing to see (yet!)</p>
           </div>
         </div>
 
@@ -159,20 +162,15 @@
 
 <script>
 function showTab(tabId, btn) {
-  // hide all content
   document.querySelectorAll('.tab-content').forEach(tab => {
     tab.classList.remove('active');
   });
 
-  // remove active from buttons
   document.querySelectorAll('.tab').forEach(tab => {
     tab.classList.remove('active');
   });
 
-  // show selected
   document.getElementById(tabId).classList.add('active');
-
-  // highlight clicked button
   btn.classList.add('active');
 }
 </script>
