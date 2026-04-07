@@ -3,7 +3,7 @@
     <div class="club-card">
       <a href="/clubs/<%= club._id %>" class="club-card-link">
         <img
-          src="/images/University_of_Regina_Logo.jpg"
+          src="<%= club.logo || '/images/University_of_Regina_Logo.jpg' %>"
           alt="Club logo"
         />
         <p><%= club.name %></p>
