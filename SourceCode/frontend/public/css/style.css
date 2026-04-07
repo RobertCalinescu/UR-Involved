@@ -57,13 +57,13 @@ h2 {
   grid-column: 8/11;
   display: grid;
   grid-template-rows: auto;
-  gap: 50px;
+  gap: 30px;
 }
 
 .header-nav-main a {
   background: rgba(224, 210, 14, 1);
   border-radius: 0;
-  height: 56px;
+  height: auto;
   width: 100%;
   max-width: 363px;
   margin: auto;
