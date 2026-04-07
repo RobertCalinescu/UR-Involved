@@ -31,7 +31,7 @@ const clubCreationRequestSchema = new mongoose.Schema(
     logo: {
       type: String,
       trim: true,
-      default: "/images/University_of_Regina_Logo.jpg"
+      default: "/images/University_of_Regina_Logo.png"
     },
     status: {
       type: String,

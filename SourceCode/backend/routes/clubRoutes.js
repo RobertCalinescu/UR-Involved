@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const clubController = require("../controllers/clubController");
-const upload = require("../middleware/uploadMiddleware");
 
 const {
   ensureAuthenticated,
@@ -15,12 +14,6 @@ router.get("/", clubController.showHomePage);
 
 // ================= CLUB DETAILS =================
 router.get("/clubs/:id", clubController.showClubDetails);
-router.get("/create-club", ensureAuthenticated, ensureStudent, clubController.showCreateClubPage);
-
-router.get("/clubs/:id/join", ensureAuthenticated, ensureStudent, (req, res) => {
-  const clubId = req.params.id;
-  res.render("joinRequest", { clubId });
-});
 
 // ================= JOIN PAGE =================
 router.get("/clubs/:id/join", ensureAuthenticated, (req, res) => {
@@ -31,10 +24,28 @@ router.get("/clubs/:id/join", ensureAuthenticated, (req, res) => {
 // ================= DASHBOARD =================
 router.get("/dashboard", ensureAuthenticated, clubController.showDashboard);
 
+// ================= STUDENT ACTIONS =================
+router.post(
+  "/clubs/:id/join",
+  ensureAuthenticated,
+  ensureStudent,
+  clubController.submitJoinRequest
+);
 
-// student actions
-router.post("/clubs/:id/join", ensureAuthenticated, ensureStudent, clubController.submitJoinRequest);
-router.post("/clubs/create-request", ensureAuthenticated, ensureStudent, upload.single("logo"), clubController.submitClubCreationRequest);
+router.post(
+  "/clubs/create-request",
+  ensureAuthenticated,
+  ensureStudent,
+  clubController.submitClubCreationRequest
+);
+
+// ================= SYSTEM ADMIN =================
+router.get(
+  "/admin/club-requests",
+  ensureAuthenticated,
+  ensureSystemAdmin,
+  clubController.showClubCreationRequests
+);
 
 router.post(
   "/admin/club-requests/:id/approve",
