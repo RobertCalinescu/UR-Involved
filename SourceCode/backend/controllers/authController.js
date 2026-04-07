@@ -44,33 +44,16 @@ exports.registerUser = async (req, res) => {
   }
 };
 
-
 exports.showLoginPage = (req, res) => {
   res.render("login");
 };
 
 exports.loginUser = (req, res, next) => {
   passport.authenticate("local", {
-    successRedirect: "/dashboard",
+    successRedirect: "/",
     failureRedirect: "/login"
   })(req, res, next);
 };
-
-
-exports.showDashboard = (req, res) => {
-  if (!req.isAuthenticated()) {
-    return res.redirect("/login");
-  }
-
-  res.render("dashboard", {
-  user: req.user,
-  userJoinRequests: [],
-  userClubCreationRequests: [],
-  memberClubs: [],
-  adminClubs: []
-});
-};
-
 
 exports.logoutUser = (req, res, next) => {
   req.logout((error) => {
@@ -90,10 +73,6 @@ exports.logoutUser = (req, res, next) => {
 };
 
 exports.showCurrentUser = (req, res) => {
-  if (!req.user) {
-    return res.send("No user logged in");
-  }
-
   res.send(`
     <h1>Logged In User</h1>
     <p><strong>Email:</strong> ${req.user.email}</p>
