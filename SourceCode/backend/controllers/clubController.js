@@ -93,7 +93,7 @@ exports.submitJoinRequest = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
       return res.status(400).send("Invalid club ID.");
     }
-
+    
     const club = await Club.findOne({
       _id: req.params.id,
       approved: true
