@@ -149,6 +149,14 @@ exports.showDashboard = async (req, res) => {
   }
 };
 
+exports.showEditProfile = async (req, res) => {
+  res.render("editProfile", {user: req.user});
+}
+
+exports.showClubCreation = async (req, res) => {
+  res.render("createClub", {user: req.user});
+}
+
 exports.submitJoinRequest = async (req, res) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -438,3 +446,4 @@ exports.rejectJoinRequest = async (req, res) => {
     res.status(500).send("Error rejecting join request.");
   }
 };
+
