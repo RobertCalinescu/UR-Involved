@@ -1,29 +1,30 @@
+//passport configuration file for user authentication using passport-local strategy
 const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require("bcrypt");
-const User = require("../../database/models/User");
+const LocalStrategy = require("passport-local").Strategy; 
+const bcrypt = require("bcrypt"); 
+const User = require("../../database/models/User"); 
 
 passport.use(
-  new LocalStrategy(
+  new LocalStrategy( 
     {
-      usernameField: "email",
+      usernameField: "email", 
       passwordField: "password"
     },
-    async (email, password, done) => {
+    async (email, password, done) => {  
       try {
-        const user = await User.findOne({ email: email.toLowerCase() });
+        const user = await User.findOne({ email: email.toLowerCase() }); 
 
         if (!user) {
-          return done(null, false, { message: "No account found with that email." });
+          return done(null, false, { message: "No account found with that email." }); 
         }
 
-        const passwordMatches = await bcrypt.compare(password, user.password);
+        const passwordMatches = await bcrypt.compare(password, user.password); 
 
         if (!passwordMatches) {
-          return done(null, false, { message: "Incorrect password." });
+          return done(null, false, { message: "Incorrect password." }); 
         }
 
-        return done(null, user);
+        return done(null, user); 
       } catch (error) {
         return done(error);
       }
@@ -31,11 +32,12 @@ passport.use(
   )
 );
 
-passport.serializeUser((user, done) => {
+passport.serializeUser((user, done) => { 
+
   done(null, user.id);
 });
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (id, done) => { 
   try {
     const user = await User.findById(id);
     done(null, user);

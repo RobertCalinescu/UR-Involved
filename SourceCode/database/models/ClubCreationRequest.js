@@ -28,6 +28,11 @@ const clubCreationRequestSchema = new mongoose.Schema(
       trim: true,
       lowercase: true
     },
+    logo: {
+      type: String,
+      trim: true,
+      default: "/images/University_of_Regina_Logo.jpg"
+    },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],

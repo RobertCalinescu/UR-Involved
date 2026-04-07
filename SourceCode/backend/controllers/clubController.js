@@ -1,6 +1,7 @@
 const Club = require("../../database/models/Club");
 const JoinRequest = require("../../database/models/JoinRequest");
 const ClubCreationRequest = require("../../database/models/ClubCreationRequest");
+const mongoose = require("mongoose");
 
 exports.showHomePage = async (req, res) => {
   try {
@@ -19,10 +20,66 @@ exports.showHomePage = async (req, res) => {
   }
 };
 
+// used to update club list on homepage without a full page reload
+exports.renderClubPartial = async (req, res) => {
+  try {
+    const { clubs } = await getClubsData(req.query);
+    res.render("partials/clubList", { clubs }); 
+
+  } catch (error) {
+    console.error("Error rendering club partial", error);
+    res.status(500).send("<p>Error loading clubs. Please try again.</p>");
+  }
+};
+
+
+// Helper to build the MongoDB query and sort options based on request parameters
+const getClubsData = async (reqQuery) => {
+  const search = reqQuery.search || "";
+  const sort = reqQuery.sort || "alphabetical";
+  const filter = reqQuery.filter || "All";
+
+  let query = { approved: true };
+
+  // Search across Name, Category, and Description
+  if (search) {
+    query.$or = [
+      { name: { $regex: search, $options: "i" } },
+      { category: { $regex: search, $options: "i" } },
+      { description: { $regex: search, $options: "i" } }
+    ];
+  }
+
+  // Apply category filter if it's not "All"
+  if (filter !== "All") {
+    query.category = filter;
+  }
+
+  // Define sorting logic
+  let sortOptions = {};
+  if (sort === "alphabetical") sortOptions = { name: 1 };
+  else if (sort === "reverseAlphabetical") sortOptions = { name: -1 };
+  else if (sort === "newest") sortOptions = { createdAt: -1 };
+  else if (sort === "oldest") sortOptions = { createdAt: 1 };
+
+  const clubs = await Club.find(query).sort(sortOptions);
+
+  return { clubs, search, sort, filter };
+};
+exports.showCreateClubPage = (req, res) => {
+  res.render("createClub");
+};
+
 exports.showClubDetails = async (req, res) => {
   try {
+    const clubId = req.params.id;
+    
+    if (!mongoose.Types.ObjectId.isValid(clubId)) {
+      return res.status(400).send("Invalid club ID");
+    }
+
     const club = await Club.findOne({
-      _id: req.params.id,
+      _id: clubId,
       approved: true
     });
 
@@ -30,22 +87,23 @@ exports.showClubDetails = async (req, res) => {
       return res.status(404).send("Club not found.");
     }
 
-    let existingJoinRequest = null;
+    const upcoming = [];
+    const past = [];
 
-    if (req.user && req.user.role === "student") {
-      existingJoinRequest = await JoinRequest.findOne({
-        student: req.user._id,
-        club: club._id
-      });
-    }
+    const joined = req.query.joined;
 
     res.render("clubDetail", {
       club,
-      existingJoinRequest
+      upcoming,
+      past,
+      joined, 
+      existingJoinRequest: req.query.existingJoinRequest === "true",
+      currentPage: "overview"
     });
+
   } catch (error) {
-    console.error("failure rendering club details page", error);
-    res.status(500).send("Error loading club details page.");
+    console.error("Error loading club details:", error);
+    res.status(500).send("Server error");
   }
 };
 
@@ -93,6 +151,10 @@ exports.showClubCreation = async (req, res) => {
 
 exports.submitJoinRequest = async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).send("Invalid club ID.");
+    }
+
     const club = await Club.findOne({
       _id: req.params.id,
       approved: true
@@ -117,7 +179,7 @@ exports.submitJoinRequest = async (req, res) => {
     });
 
     if (existingRequest) {
-      return res.status(400).send("You already have a pending join request for this club.");
+      return res.redirect(`/clubs/${club._id}?existingJoinRequest=true`);
     }
 
     const joinRequest = new JoinRequest({
@@ -128,7 +190,7 @@ exports.submitJoinRequest = async (req, res) => {
 
     await joinRequest.save();
 
-    res.redirect(`/clubs/${club._id}`);
+    res.redirect(`/clubs/${club._id}?joined=true`);
   } catch (error) {
     console.error("error submitting join request", error);
     res.status(500).send("Error submitting join request.");
@@ -137,14 +199,25 @@ exports.submitJoinRequest = async (req, res) => {
 
 exports.submitClubCreationRequest = async (req, res) => {
   try {
+    console.log("req.file:", req.file);
+    console.log("req.body:", req.body);
+    
     const { proposedName, description, category, contactEmail } = req.body;
+    if (!proposedName || !description || !category || !contactEmail) {
+      return res.status(400).send("All fields are required.");
+    }
+
+    const logoPath = req.file
+    ? `/images/club-logos/${req.file.filename}`
+    : "/images/University_of_Regina_Logo.jpg";
 
     const request = new ClubCreationRequest({
       requestedBy: req.user._id,
-      proposedName,
-      description,
-      category,
-      contactEmail
+      proposedName: proposedName.trim(),
+      description: description.trim(),
+      category: category.trim(),
+      contactEmail: contactEmail.trim().toLowerCase(),
+      logo: logoPath
     });
 
     await request.save();
@@ -171,6 +244,10 @@ exports.showClubCreationRequests = async (req, res) => {
 
 exports.approveClubCreationRequest = async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).send("Invalid request ID.");
+    }
+
     const request = await ClubCreationRequest.findById(req.params.id);
 
     if (!request) {
@@ -186,6 +263,7 @@ exports.approveClubCreationRequest = async (req, res) => {
       description: request.description,
       category: request.category,
       contactEmail: request.contactEmail,
+      logo: request.logo || "/images/University_of_Regina_Logo.jpg",
       approved: true,
       createdBy: request.requestedBy,
       admins: [request.requestedBy],
@@ -206,10 +284,18 @@ exports.approveClubCreationRequest = async (req, res) => {
 
 exports.rejectClubCreationRequest = async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).send("Invalid request ID.");
+    }
+
     const request = await ClubCreationRequest.findById(req.params.id);
 
     if (!request) {
       return res.status(404).send("Club creation request not found.");
+    }
+
+    if (request.status !== "pending") {
+      return res.status(400).send("This request has already been processed.");
     }
 
     request.status = "rejected";
@@ -224,6 +310,10 @@ exports.rejectClubCreationRequest = async (req, res) => {
 
 exports.showClubJoinRequests = async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.clubId)) {
+      return res.status(400).send("Invalid club ID.");
+    }
+
     const club = await Club.findById(req.params.clubId);
 
     if (!club) {
@@ -244,7 +334,8 @@ exports.showClubJoinRequests = async (req, res) => {
     }
 
     const joinRequests = await JoinRequest.find({
-      club: club._id
+      club: club._id,
+      status: "pending"
     }).populate("student");
 
     res.render("adminJoinRequests", {
@@ -259,10 +350,18 @@ exports.showClubJoinRequests = async (req, res) => {
 
 exports.approveJoinRequest = async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).send("Invalid join request ID.");
+    }
+
     const joinRequest = await JoinRequest.findById(req.params.id).populate("club");
 
     if (!joinRequest) {
       return res.status(404).send("Join request not found.");
+    }
+
+     if (joinRequest.status !== "pending") {
+      return res.status(400).send("This join request has already been processed.");
     }
 
     const club = await Club.findById(joinRequest.club._id);
@@ -301,10 +400,18 @@ exports.approveJoinRequest = async (req, res) => {
 
 exports.rejectJoinRequest = async (req, res) => {
   try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).send("Invalid join request ID.");
+    }
+
     const joinRequest = await JoinRequest.findById(req.params.id).populate("club");
 
     if (!joinRequest) {
       return res.status(404).send("Join request not found.");
+    }
+
+    if (joinRequest.status !== "pending") {
+      return res.status(400).send("This join request has already been processed.");
     }
 
     const club = await Club.findById(joinRequest.club._id);
