@@ -248,11 +248,10 @@ h2 {
 }
 
 .dashboard-btn-container {
-  position: absolute;   /* 🔥 takes it out of grid */
+  position: absolute;   
 
-  top: 15px;            /* distance from top */
-  right: 20px;          /* distance from right */
-
+  top: 15px;            
+  right: 20px;          
   display: flex;
   align-items: center;
   justify-content: center;
@@ -278,7 +277,7 @@ h2 {
   border: 1px solid rgba(0, 0, 0, 0.65);
   border-radius: 30px;
   gap: 25px;
-  height: 320px;
+  height: 360px;
 }
 
 .profile-image {
@@ -777,6 +776,14 @@ a.join-btn:active {
   margin-bottom: 25px;
 }
 
+.profile-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 266px;
+  flex-shrink: 0;
+}
+
 .tab {
   padding: 8px 18px;
   border: none;
@@ -816,13 +823,13 @@ a.join-btn:active {
   border-radius: 20px;
 }
 
-/* ===== HERO BUTTON (CLEAN VERSION) ===== */
+
 a.hero-btn-box {
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  width: 220px; /* smaller like screenshot */
+  width: 220px; 
   padding: 8px 12px;
 
   background: #ffffff !important;
@@ -832,30 +839,30 @@ a.hero-btn-box {
   font-weight: 700;
   font-size: 14px;
 
-  border-left: 12px solid #ffc82e !important; /* thicker + official yellow */
+  border-left: 12px solid #ffc82e !important; 
 
   transition: all 0.2s ease;
 }
 
-/* TEXT + ARROW spacing */
+
 a.hero-btn-box {
-  gap: 6px; /* tighter */
+  gap: 6px; 
 }
 
 /* ARROW */
 a.hero-btn-box span {
-  font-size: 22px; /* slightly smaller but bold */
+  font-size: 22px; 
   font-weight: 900;
   letter-spacing: -1px;
 }
 
 /* HOVER */
 a.hero-btn-box:hover {
-  background: #ffc82e !important; /* official yellow */
+  background: #ffc82e !important; 
   color: #000 !important;
 }
 
-/* ===== HERO TEXT FIX ===== */
+
 
 .hero-text h1 {
   font-size: 64px;
@@ -863,7 +870,7 @@ a.hero-btn-box:hover {
   line-height: 1.05;
   margin: 0;
 
-  color: #FFD84D !important;  /* lighter UofR yellow */
+  color: #FFD84D !important;  
 }
 
 .hero-text p {
@@ -873,13 +880,13 @@ a.hero-btn-box:hover {
   color: #FFD84D !important;
   font-weight: 700;   
 }
-/* ===== DROPDOWN FIX ===== */
-/* ===== FINAL DROPDOWN FIX ===== */
+
+
 .dropdown-menu {
   position: absolute !important;
 
-  top: 0px !important;              /* 👈 move UP */
-  right: calc(100% + 15px) !important; /* 👈 left of icon with space */
+  top: 0px !important;              
+  right: calc(100% + 15px) !important; 
 
   left: auto !important;
   transform: none !important;
@@ -891,5 +898,12 @@ a.hero-btn-box:hover {
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 .dropdown-toggle::after {
-  transform: rotate(90deg); /* makes it point up/down */
+  transform: rotate(90deg); 
+}
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
 }
