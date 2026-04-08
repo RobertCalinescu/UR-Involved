@@ -2,17 +2,15 @@
 
 <div class="club-detail-page">
 
-  <% if (joined && joined.toString() === "true") { %>
-    <div class="alert success">
-      Request sent successfully!
-    </div>
-  <% } %>
-
-  <% if (existingJoinRequest) { %>
-    <div class="alert warning">
-      You already have a pending join request.
-    </div>
-  <% } %>
+  <% if (existingJoinRequest && existingJoinRequest.status === "pending") { %>
+  <div class="alert warning">
+    Your join request is pending.
+  </div>
+<% } else if (existingJoinRequest && existingJoinRequest.status === "rejected") { %>
+  <div class="alert warning">
+    Your join request was rejected.
+  </div>
+<% } %>
 
   <% if (!club) { %>
     <p style="padding:40px;">Club not found</p>
@@ -30,46 +28,50 @@
         <% } %>
 
         <h3 class="club-name"><%= club.name %></h3>
-        
+
+        <p class="club-created-date">
+          Created:
+          <%= club.createdAt
+            ? new Date(club.createdAt).toLocaleDateString()
+            : "N/A" %>
+        </p>
+
         <div class="club-actions">
 
           <% if (!currentUser || currentUser.role !== "systemAdmin") { %>
-            <% if (existingJoinRequest) { %>
-              <button class="join-btn" disabled>Request Pending</button>
-              
-              <% } else if (joined === "true") { %>
-                <button class="join-btn" disabled>Request Sent</button>
-                
-                <% } else { %>
-                  <a href="/clubs/<%= club._id %>/join" class="join-btn">
-                    Request to Join
-                  </a>
-                  <% } %>
-                  <% } %>
-                  
-                  <% if (club.contactEmail) { %>
-                    <a href="mailto:<%= club.contactEmail %>" class="contact-btn">
-                      Contact
-                    </a>
-                    <% } %>
+            <% if (alreadyMember) { %>
+              <button class="join-btn" disabled>Club Member</button>
 
-                  <% if (club.website) { %>
-                    <a href="<%= club.website %>" target="_blank" class="contact-btn">
-                      Visit Website
-                    </a>
-                    <% } %>
-                  </div>
-                  
-                  <% if (club.contactEmail) { %>
-                    <p class="contact-email"><%= club.contactEmail %></p>
-                    <% } %>
-                    
-                    <p class="created-date contact-email">
-                      Created:
-                      <%= club.createdAt
-                        ? new Date(club.createdAt).toLocaleDateString()
-                        : "N/A" %>
-                    </p>
+            <% } else if (existingJoinRequest && existingJoinRequest.status === "pending") { %>
+              <button class="join-btn" disabled>Pending</button>
+
+            <% } else if (existingJoinRequest && existingJoinRequest.status === "rejected") { %>
+              <button class="join-btn" disabled>Rejected</button>
+
+            <% } else { %>
+              <form action="/clubs/<%= club._id %>/join" method="POST" style="display:inline;">
+                <button type="submit" class="join-btn">Request to Join</button>
+              </form>
+            <% } %>
+          <% } %>
+
+          <% if (club.contactEmail) { %>
+            <a href="mailto:<%= club.contactEmail %>" class="contact-btn">
+              Contact
+            </a>
+          <% } %>
+
+          <% if (club.website) { %>
+            <a href="<%= club.website %>" target="_blank" class="contact-btn">
+              Website
+            </a>
+          <% } %>
+
+        </div>
+
+        <% if (club.contactEmail) { %>
+          <p class="contact-email"><%= club.contactEmail %></p>
+        <% } %>
 
         <% if (currentUser && (
           currentUser.role === "systemAdmin" ||
@@ -140,17 +142,22 @@
 
         <div id="about" class="tab-content">
 
-          <div class="empty-box">
-            <h4>About</h4>
-            <p><%= club.description || "No description available." %></p>
-          </div>
-
-          <div class="empty-box" style="margin-top: 20px;">
-            <h4>Category</h4>
-            <p><%= club.category || "Not specified" %></p>
-          </div>
-
+        <div class="empty-box">
+          <h4>About</h4>
+          <p><%= club.description || "No description available." %></p>
         </div>
+
+        <div class="empty-box" style="margin-top: 20px;">
+          <h4>Category</h4>
+          <p><%= club.category || "Not specified" %></p>
+        </div>
+
+        <div class="empty-box" style="margin-top: 20px;">
+          <h4>Club Creator</h4>
+          <p><%= club.createdBy && club.createdBy.email ? club.createdBy.email : "Not available" %></p>
+        </div>
+
+      </div>
 
         <div id="members" class="tab-content">
           <div class="empty-box">
