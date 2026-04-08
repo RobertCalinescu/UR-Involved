@@ -700,6 +700,7 @@ a.join-btn {
   text-decoration: none !important;
   font-weight: 600;
   transition: 0.2s ease;
+  width: 173px;
 }
 
 a.join-btn:hover {
@@ -744,9 +745,10 @@ a.join-btn:active {
   background: #e0d20e;  
   color: black;
   padding: 10px 18px;
-  border-radius: 25px;
+  border-radius: 12px;
   text-decoration: none;
   font-weight: 600;
+  width: 173px;
 }
 
 .contact-btn:hover {

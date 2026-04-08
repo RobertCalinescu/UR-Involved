@@ -30,45 +30,46 @@
         <% } %>
 
         <h3 class="club-name"><%= club.name %></h3>
-
-        <p class="club-description">
-          <%= club.description || "No description available." %>
-        </p>
-
-        <p class="created-date">
-          Created:
-          <%= club.createdAt
-            ? new Date(club.createdAt).toLocaleDateString()
-            : "N/A" %>
-        </p>
-
+        
         <div class="club-actions">
 
           <% if (!currentUser || currentUser.role !== "systemAdmin") { %>
             <% if (existingJoinRequest) { %>
               <button class="join-btn" disabled>Request Pending</button>
+              
+              <% } else if (joined === "true") { %>
+                <button class="join-btn" disabled>Request Sent</button>
+                
+                <% } else { %>
+                  <a href="/clubs/<%= club._id %>/join" class="join-btn">
+                    Request to Join
+                  </a>
+                  <% } %>
+                  <% } %>
+                  
+                  <% if (club.contactEmail) { %>
+                    <a href="mailto:<%= club.contactEmail %>" class="contact-btn">
+                      Contact
+                    </a>
+                    <% } %>
 
-            <% } else if (joined === "true") { %>
-              <button class="join-btn" disabled>Request Sent</button>
-
-            <% } else { %>
-              <a href="/clubs/<%= club._id %>/join" class="join-btn">
-                Request to Join
-              </a>
-            <% } %>
-          <% } %>
-
-          <% if (club.contactEmail) { %>
-            <a href="mailto:<%= club.contactEmail %>" class="contact-btn">
-              Contact
-            </a>
-          <% } %>
-
-        </div>
-
-        <% if (club.contactEmail) { %>
-          <p class="contact-email"><%= club.contactEmail %></p>
-        <% } %>
+                  <% if (club.website) { %>
+                    <a href="<%= club.website %>" target="_blank" class="contact-btn">
+                      Visit Website
+                    </a>
+                    <% } %>
+                  </div>
+                  
+                  <% if (club.contactEmail) { %>
+                    <p class="contact-email"><%= club.contactEmail %></p>
+                    <% } %>
+                    
+                    <p class="created-date contact-email">
+                      Created:
+                      <%= club.createdAt
+                        ? new Date(club.createdAt).toLocaleDateString()
+                        : "N/A" %>
+                    </p>
 
         <% if (currentUser && (
           currentUser.role === "systemAdmin" ||
