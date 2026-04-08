@@ -783,15 +783,17 @@ body {
 }
 
 /* JOIN BUTTON */
-a.join-btn {
+.join-btn {
   display: inline-block;
   background: var(--accent);
   color: var(--black) !important;
   padding: 12px 24px;
+  border: none;
   border-radius: 12px;
   text-decoration: none !important;
   font-weight: 600;
   transition: 0.2s ease;
+  width: 173px;
   font-family: "Oswald", sans-serif;
 }
 
@@ -846,9 +848,10 @@ a.join-btn:active {
   background: var(--accent);  
   color: var(--black);
   padding: 10px 18px;
-  border-radius: 25px;
+  border-radius: 12px;
   text-decoration: none;
   font-weight: 600;
+  width: 173px;
   font-family: "Oswald", sans-serif;
 }
 
