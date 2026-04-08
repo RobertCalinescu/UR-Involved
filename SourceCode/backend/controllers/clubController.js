@@ -90,7 +90,7 @@ exports.showClubDetails = async (req, res) => {
     const club = await Club.findOne({
       _id: clubId,
       approved: true
-    });
+    }).populate("createdBy", "email");
 
     if (!club) {
       return res.status(404).send("Club not found.");
