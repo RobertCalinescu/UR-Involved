@@ -67,23 +67,24 @@ async function seedDatabase() {
     await mongoose.connect("mongodb://127.0.0.1:27017/ur_involved");
     console.log("Connected to MongoDB");
 
-    // Ensure system admin accounts exist, but do not delete existing users
     for (const user of seedUsers) {
-      const existingUser = await User.findOne({ email: user.email.toLowerCase() });
+      const hashedPassword = await bcrypt.hash(user.password, 10);
 
-      if (!existingUser) {
-        const hashedPassword = await bcrypt.hash(user.password, 10);
-
-        await User.create({
+      await User.findOneAndUpdate(
+        { email: user.email.toLowerCase() },
+        {
           email: user.email.toLowerCase(),
           password: hashedPassword,
           role: user.role
-        });
+        },
+        {
+          upsert: true,
+          new: true,
+          runValidators: true
+        }
+      );
 
-        console.log(`Inserted user: ${user.email}`);
-      } else {
-        console.log(`User already exists: ${user.email}`);
-      }
+      console.log(`Ensured seeded user works: ${user.email}`);
     }
 
     const systemAdmin = await User.findOne({ email: "rob@uregina.ca" });
