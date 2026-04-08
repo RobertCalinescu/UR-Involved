@@ -783,11 +783,12 @@ body {
 }
 
 /* JOIN BUTTON */
-a.join-btn {
+.join-btn {
   display: inline-block;
   background: var(--accent);
   color: var(--black) !important;
   padding: 12px 24px;
+  border: none;
   border-radius: 12px;
   text-decoration: none !important;
   font-weight: 600;
