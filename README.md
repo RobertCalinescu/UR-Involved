@@ -109,7 +109,7 @@ The MVP includes the following features:
 
 ---
 
-##Installation
+## Installation
 
 - Clone the repository:
   ```
