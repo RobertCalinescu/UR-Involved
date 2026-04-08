@@ -21,7 +21,6 @@
   <body>
     <header class="header header-main">
 
-      <!-- HERO TEXT -->
       <div class="header-icon-container">
         <div class="hero-text">
           <h1>UR INVOLVED</h1>
@@ -29,17 +28,18 @@
         </div>
       </div>
 
-      <!-- RIGHT SIDE BUTTONS -->
       <div class="header-nav-main">
-        <% if (currentUser && currentUser.role === "student") { %>
-              <a href="/create-club" class="btn btn-warning" role="button">Create club</a>
-            <% } else { %>
-              <a href="/login" class="btn btn-warning" role="button"> Login</a>
-            <% } %>
-
+        <% if (!currentUser) { %>
+          <a href="/login" class="hero-btn-box">
+            Login <span>››</span>
+          </a>
+        <% } else if (currentUser.role === "student") { %>
+          <a href="/create-club" class="hero-btn-box">
+            Create club <span>››</span>
+          </a>
+        <% } %>
       </div>
 
-      <!-- PROFILE DROPDOWN -->
       <div class="dropdown dashboard-btn-container">
 
         <button 
@@ -55,7 +55,7 @@
 
         </button>
 
-       <ul class="dropdown-menu dropdown-menu-end">
+        <ul class="dropdown-menu dropdown-menu-end">
 
           <label class="btn btn-warning rounded-pill px-4" style="width: 192px; text-align: center">
             <% if (currentUser) { %>
@@ -101,5 +101,3 @@
       </div>
 
     </header>
-  </body>
-</html>
