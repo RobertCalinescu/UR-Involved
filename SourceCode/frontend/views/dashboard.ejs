@@ -93,7 +93,13 @@
             <a href="/clubs/<%= club._id %>" class="club-card-link">
               <img src="<%= club.logo %>" alt="Club logo" />
               <p><%= club.name %></p>
+              <% if (club.createdBy && club.createdBy.toString() === user._id.toString()) { %>
+              <small>Club Creator</small>
+            <% } else if (club.admins && club.admins.some(adminId => adminId.toString() === user._id.toString())) { %>
+              <small>Admin</small>
+            <% } else { %>
               <small>Member</small>
+            <% } %>
             </a>
           </div>
         <% }) %>
