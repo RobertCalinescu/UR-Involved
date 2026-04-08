@@ -44,16 +44,18 @@
 
         <div class="club-actions">
 
-          <% if (existingJoinRequest) { %>
-            <button class="join-btn" disabled>Request Pending</button>
+          <% if (!currentUser || currentUser.role !== "systemAdmin") { %>
+            <% if (existingJoinRequest) { %>
+              <button class="join-btn" disabled>Request Pending</button>
 
-          <% } else if (joined === "true") { %>
-            <button class="join-btn" disabled>Request Sent</button>
+            <% } else if (joined === "true") { %>
+              <button class="join-btn" disabled>Request Sent</button>
 
-          <% } else { %>
-            <a href="/clubs/<%= club._id %>/join" class="join-btn">
-              Request to Join
-            </a>
+            <% } else { %>
+              <a href="/clubs/<%= club._id %>/join" class="join-btn">
+                Request to Join
+              </a>
+            <% } %>
           <% } %>
 
           <% if (club.contactEmail) { %>
@@ -88,11 +90,15 @@
       <div class="right-content">
 
         <div class="tabs">
-          <button class="tab active" onclick="showTab('events', this)">Events</button>
           <button class="tab" onclick="showTab('about', this)">About</button>
+          <button class="tab active" onclick="showTab('events', this)">Events</button>
           <button class="tab" onclick="showTab('members', this)">Members</button>
-          <button class="tab" onclick="showTab('gallery', this)">Gallery</button>
-          <button class="tab" onclick="showTab('joinRequests', this)">Join Requests</button>
+          <% if (currentUser && (
+            currentUser.role === "systemAdmin" ||
+            (club.createdBy && club.createdBy.toString() === currentUser._id.toString())
+          )) { %>
+            <button class="tab" onclick="showTab('joinRequests', this)">Join Requests</button>
+          <% } %>
         </div>
 
         <div id="events" class="tab-content active">
@@ -151,12 +157,36 @@
           </div>
         </div>
 
-        <div id="gallery" class="tab-content">
-          <div class="empty-box">
-            <p>Nothing to see (yet!)</p>
-          </div>
-        </div>
+        <div id="joinRequests" class="tab-content">
+          <% if (currentUser && (
+            currentUser.role === "systemAdmin" ||
+            (club.createdBy && club.createdBy.toString() === currentUser._id.toString())
+          )) { %>
+            <div class="empty-box" style="align-items: flex-start; text-align: left; max-width: 100%;">
+              <h3 style="color: #00c800; margin-bottom: 20px;">Pending Join Requests</h3>
 
+              <% if (typeof joinRequests !== 'undefined' && joinRequests && joinRequests.length > 0) { %>
+                <ul class="request-list" style="list-style: none; padding: 0; width: 100%;">
+                  <% joinRequests.forEach(request => { %>
+                    <li class="request-item" style="background: #ffffff; padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #ddd;">
+                      <span class="username"><strong><%= request.student ? request.student.email : "Unknown User" %></strong></span>
+                      <div class="actions" style="display: flex; gap: 10px;">
+                        <form action="/admin/join-requests/<%= request._id %>/approve" method="POST" style="margin: 0;">
+                          <button type="submit" class="join-submit-btn" style="padding: 8px 16px; font-size: 0.9rem;">Accept</button>
+                        </form>
+                        <form action="/admin/join-requests/<%= request._id %>/reject" method="POST" style="margin: 0;">
+                          <button type="submit" style="padding: 8px 16px; font-size: 0.9rem; background-color: #dc3545; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 500;">Decline</button>
+                        </form>
+                      </div>
+                    </li>
+                  <% }) %>
+                </ul>
+              <% } else { %>
+                <p>There are currently no join requests.</p>
+              <% } %>
+            </div>
+          <% } %>
+        </div>
       </div>
 
     </div>

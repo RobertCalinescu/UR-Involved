@@ -98,6 +98,25 @@ exports.showClubDetails = async (req, res) => {
 
     const upcoming = [];
     const past = [];
+    let joinRequests = [];
+
+    if (req.user) {
+      const isOwner =
+        club.createdBy && club.createdBy.toString() === req.user._id.toString();
+
+      const isAdmin =
+        club.admins &&
+        club.admins.some(adminId => adminId.toString() === req.user._id.toString());
+
+      const isSystemAdmin = req.user.role === "systemAdmin";
+
+      if (isOwner || isAdmin || isSystemAdmin) {
+        joinRequests = await JoinRequest.find({
+          club: club._id,
+          status: "pending"
+        }).populate("student");
+      }
+    }
 
     const joined = req.query.joined;
 
@@ -107,7 +126,8 @@ exports.showClubDetails = async (req, res) => {
       past,
       joined, 
       existingJoinRequest: req.query.existingJoinRequest === "true",
-      currentPage: "overview"
+      currentPage: "overview",
+      joinRequests
     });
 
   } catch (error) {
@@ -404,7 +424,7 @@ exports.approveJoinRequest = async (req, res) => {
       await club.save();
     }
 
-    res.redirect(`/admin/clubs/${club._id}/join-requests`);
+    res.redirect(`/clubs/${club._id}`);
   } catch (error) {
     console.error("error approving join request", error);
     res.status(500).send("Error approving join request.");
@@ -445,7 +465,7 @@ exports.rejectJoinRequest = async (req, res) => {
     joinRequest.status = "rejected";
     await joinRequest.save();
 
-    res.redirect(`/admin/clubs/${club._id}/join-requests`);
+    res.redirect(`/clubs/${club._id}`);
   } catch (error) {
     console.error("error rejecting join request", error);
     res.status(500).send("Error rejecting join request.");
