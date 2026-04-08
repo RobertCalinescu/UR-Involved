@@ -237,7 +237,7 @@ h2 {
   justify-content: center;
   gap: 173px;
   padding: 3em;
-  font-family: "Poppins", sans-serif;
+  
 }
 
 .auth-links {
@@ -1031,20 +1031,11 @@ a.hero-btn-box:hover {
   color: var(--primary);
 }
 
-.quicklinks {
-  color: black;
-  padding: 1rem;
-  width: 250px;
-  height: 175px;
-  border-radius: 30px;
-  background: rgba(217, 217, 217, 1);
-}
-
-.quicklink-buttons {
+.footer-buttons {
   background: #fec42e;
   width: 200px;
-  padding: 2px;
-  margin: 5px;
+  padding: 1px;
+  margin: 10px;
   border-radius: 5px;
   color: black;
   text-decoration: none;
@@ -1052,7 +1043,7 @@ a.hero-btn-box:hover {
   cursor: pointer;
 }
 
-.quicklink-buttons:hover {
+.footer-buttons:hover {
   background: #ffdb7e;
   font-family: "Oswald", sans-serif;
   color: var(--primary);
