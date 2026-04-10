@@ -111,6 +111,7 @@ The MVP includes the following features:
 
 ## Installation
 
+- <strong> Ensure that you have mongodb and nodejs installed in your computer before you begin! </strong>
 - Clone the repository:
   ```
    git clone www.github.com/RobertCalinescu/UR-Involved
